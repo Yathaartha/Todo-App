@@ -81,6 +81,10 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             titleTextView.setTextColor(todo.getIsComplete() ? completeColor : incompleteColor);
             detailTextView.setText(todo.getDetail());
             dateTextView.setText(todo.getCreatedAt().toString());
+            if(titleTextView.getText().equals("No todos yet")){
+                editButton.setVisibility(View.GONE);
+                deleteButton.setVisibility(View.GONE);
+            }
             titleTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -106,7 +110,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     }
     public void submitData(List<Todo> data) {
         this.data = data;
-        Log.d("submitData", ""+data);
         notifyDataSetChanged();
     }
 }

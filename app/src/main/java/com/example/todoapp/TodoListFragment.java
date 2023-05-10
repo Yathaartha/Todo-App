@@ -23,6 +23,8 @@ import android.view.ViewGroup;
 import com.example.todoapp.database.Todo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,7 +61,18 @@ public class TodoListFragment extends Fragment {
             @Override
             public void onChanged(List<Todo> todos) {
                 Log.d("onChanged: ", "" + todos);
-                adapter.submitData(todos);
+                if(todos.size() == 0) {
+                    Todo todo = new Todo();
+                    todo.setTitle("No todos yet");
+                    todo.setDetail("Press the add icon to create one");
+                    todo.setIsComplete(true);
+                    todo.setPriority("urgent");
+                    List<Todo> emptyList = Arrays.asList(todo);
+                    adapter.submitData(emptyList);
+                }else {
+                    adapter.submitData(todos);
+                }
+
             }
         });
         recyclerView.setAdapter(adapter);
