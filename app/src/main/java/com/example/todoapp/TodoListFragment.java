@@ -23,11 +23,6 @@ import com.example.todoapp.database.Todo;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TodoListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TodoListFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -75,8 +70,8 @@ public class TodoListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.new_todo:
+        switch (item.toString()){
+            case "new_todo":
 
                 Todo todo = new Todo();
                 todo.setTitle("New Todo");
@@ -89,6 +84,7 @@ public class TodoListFragment extends Fragment {
                 return true;
 
             default:
+                Log.d("onOptionsItemSelected: ", ""+item.toString());
                 return super.onOptionsItemSelected(item);
         }
     }

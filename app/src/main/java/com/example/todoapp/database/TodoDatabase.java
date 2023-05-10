@@ -58,7 +58,7 @@ public abstract class TodoDatabase extends RoomDatabase {
 
                     // If you want to keep the data through app restarts,
                     // comment out the following line.
-//                    new PopulateDbAsync(INSTANCE);
+                    new PopulateDbAsync(INSTANCE);
                 }
             };
 
