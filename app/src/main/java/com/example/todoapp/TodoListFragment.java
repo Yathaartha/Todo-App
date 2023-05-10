@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,8 +21,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.todoapp.database.Todo;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.UUID;
 
 public class TodoListFragment extends Fragment {
 
@@ -29,6 +32,14 @@ public class TodoListFragment extends Fragment {
     private TodoAdapter adapter;
     private TodoModel todoModel;
     private View view;
+    private FloatingActionButton addTodoButton;
+
+    public static TodoListFragment newInstance() {
+        TodoListFragment fragment = new TodoListFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public TodoListFragment() {
         // Required empty public constructor
@@ -40,6 +51,7 @@ public class TodoListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
 
         recyclerView = view.findViewById(R.id.todo_list_rv);
+        addTodoButton = view.findViewById(R.id.add_todo_btn);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         adapter = new TodoAdapter();
@@ -52,6 +64,21 @@ public class TodoListFragment extends Fragment {
         });
         recyclerView.setAdapter(adapter);
 
+        addTodoButton.setOnClickListener(v -> {
+//            Todo todo = new Todo();
+//            todo.setTitle("New Todo");
+//            todo.setDetail("New Todo Detail");
+//            todo.setIsComplete(true);
+//            todoModel.addTodo(todo);
+//            Intent intent = TodoPagerActivity.makeIntent(getActivity(), todo.getId());
+//            startActivity(intent);
+            Fragment fragment = new AddTodoFragment();
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            fm.beginTransaction()
+                    .add(R.id.container, fragment)
+                    .commit();
+        });
+
         return view;
     }
 
@@ -60,32 +87,5 @@ public class TodoListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         todoModel = new ViewModelProvider(this).get(TodoModel.class);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_todo_list, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.toString()){
-            case "new_todo":
-
-                Todo todo = new Todo();
-                todo.setTitle("New Todo");
-
-                todoModel.addTodo(todo);
-
-                Intent intent = TodoPagerActivity.makeIntent(getActivity(), todo.getId());
-                startActivity(intent);
-
-                return true;
-
-            default:
-                Log.d("onOptionsItemSelected: ", ""+item.toString());
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

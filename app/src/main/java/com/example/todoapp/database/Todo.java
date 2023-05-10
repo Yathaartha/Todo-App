@@ -20,7 +20,7 @@ public class Todo {
     private Date createdAt;
     private Date lastUpdated;
     private Date completedAt;
-    private int priority;
+    private String priority;
 
     @Override
     public String toString() {
@@ -52,11 +52,11 @@ public class Todo {
         this.completedAt = completedAt;
     }
 
-    public int getPriority() {
+    public String getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(String priority) {
         this.priority = priority;
     }
 

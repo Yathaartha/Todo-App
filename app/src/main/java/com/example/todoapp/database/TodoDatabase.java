@@ -78,25 +78,25 @@ public abstract class TodoDatabase extends RoomDatabase {
                 Todo todo = new Todo();
                 todo.setTitle("Wake up!");
                 todo.setDetail("either set 2 alarm clocks or none");
-                todo.setPriority(1);
+                todo.setPriority("low");
                 mDao.insert(todo);
 
                 Todo todo1 = new Todo();
                 todo1.setTitle("Drink coffee!");
                 todo1.setDetail("Use the liter mugs");
-                todo1.setPriority(2);
+                todo1.setPriority("high");
                 mDao.insert(todo1);
 
                 Todo todo2 = new Todo();
                 todo2.setTitle("Ponder the duality of existence!");
                 todo2.setDetail("and plant trees");
-                todo2.setPriority(1);
+                todo2.setPriority("medium");
                 mDao.insert(todo2);
 
                 Todo todo3 = new Todo();
                 todo3.setTitle("make someone laugh");
                 todo3.setDetail("read a comic");
-                todo3.setPriority(3);
+                todo3.setPriority("urgent");
                 mDao.insert(todo3);
             });
         }
