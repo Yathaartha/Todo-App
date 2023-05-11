@@ -35,5 +35,7 @@ public class TodoModel extends AndroidViewModel {
         repository.insert(todo);
     }
 
+    void updateTodo(Todo todo) {repository.update(todo);}
+
     void delete(UUID id) {repository.delete(id);}
 }

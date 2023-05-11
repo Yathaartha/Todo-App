@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,7 +65,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         private ImageButton deleteButton;
         private ImageButton editButton;
 
-        private int completeColor = Color.parseColor("#FF00FF");
+        private int completeColor = Color.parseColor("#1ECD18");
 
         private int incompleteColor = Color.parseColor("#FF0000");
 
@@ -106,6 +108,19 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                     UUID id = data.get(position).getId();
 
                     todoModel.delete(id);
+                }
+            });
+
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getLayoutPosition();
+                    UUID id = data.get(position).getId();
+                    Fragment fragment = EditTodoFragment.newInstance(id);
+                    FragmentManager fm = ((MainActivity) context).getSupportFragmentManager();
+                    fm.beginTransaction()
+                            .add(R.id.container, fragment)
+                            .commit();
                 }
             });
 

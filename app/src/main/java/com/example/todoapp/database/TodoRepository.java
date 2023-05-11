@@ -27,6 +27,12 @@ public class TodoRepository {
         });
     }
 
+    public void update(Todo todo) {
+        TodoDatabase.databaseWriteExecutor.execute(() -> {
+            todoDao.update(todo);
+        });
+    }
+
     public LiveData<Todo> getTodo(UUID id) {
         return todoDao.getTodoById(id);
     }

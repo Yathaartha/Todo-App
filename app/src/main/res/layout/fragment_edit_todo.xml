@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:backgroundTint="#FFFFFF"
-    tools:context=".AddTodoFragment">
+    tools:context=".EditTodoFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="409dp"
@@ -52,10 +52,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Priority:"
+                    android:text="Priority"
                     android:id="@+id/priorityText"
                     android:textAlignment="viewStart"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/prioritySelect"
                     app:layout_constraintTop_toBottomOf="@+id/detailInput"
@@ -72,10 +72,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Category:"
+                    android:text="Category"
                     android:id="@+id/categoryText"
                     android:textAlignment="viewStart"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/categorySelect"
                     app:layout_constraintTop_toBottomOf="@+id/prioritySelect"
@@ -101,22 +101,40 @@
                     android:textColorHighlight="#000000"
                     android:textColorHint="#000000"
                     android:textColorLink="#000000"
-                    app:layout_constraintBottom_toTopOf="@+id/submit_button"
+                    app:layout_constraintBottom_toTopOf="@+id/is_complete_switch"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/categorySelect"
                     app:layout_constraintVertical_bias="0.5" />
+
+                <Switch
+                    android:id="@+id/is_complete_switch"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:checked="true"
+                    android:text="Is Task Completed?"
+                    android:textColorHighlight="#33B326"
+                    android:theme="@style/SCBSwitch"
+                    android:textColorLink="#36B838"
+                    app:layout_constraintBottom_toTopOf="@+id/submit_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dueDateInput"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                 <Button
                     android:id="@+id/submit_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="Add Task"
+                    android:backgroundTint="#10E413"
+                    android:text="Edit Task"
+                    android:textColor="#FFFFFF"
                     app:layout_constraintBottom_toTopOf="@+id/cancel_button"
-                    app:layout_constraintTop_toBottomOf="@+id/dueDateInput"
-                    app:layout_constraintVertical_bias="0.5"
-                    tools:layout_editor_absoluteX="10dp" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/is_complete_switch"
+                    app:layout_constraintVertical_bias="0.5" />
 
                 <Button
                     android:id="@+id/cancel_button"
