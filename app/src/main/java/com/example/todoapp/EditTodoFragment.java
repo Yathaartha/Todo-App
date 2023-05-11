@@ -141,6 +141,11 @@ public class EditTodoFragment extends Fragment implements DatePickerFragment.Dat
                 currentTodo.setLastUpdated(new Date());
                 currentTodo.setIsComplete(isCompleteSwitch.isChecked());
 
+                if(isCompleteSwitch.isChecked()) {
+                    currentTodo.setCompletedAt(new Date());
+                } else {
+                    currentTodo.setCompletedAt(null);
+                }
 
                 todoModel.updateTodo(currentTodo);
 
