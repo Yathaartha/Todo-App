@@ -27,6 +27,10 @@ public class TodoModel extends AndroidViewModel {
         return todosList;
     }
 
+    LiveData<Integer> getCompletedTodoCount() { return repository.getCompletedTodoCount(); }
+
+    LiveData<Integer> getIncompleteTodoCount() { return repository.getIncompleteTodoCount(); }
+
     LiveData<Todo> getTodo(UUID id) {
         return repository.getTodo(id);
     }

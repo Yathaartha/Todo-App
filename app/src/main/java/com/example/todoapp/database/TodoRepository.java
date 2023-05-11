@@ -21,6 +21,14 @@ public class TodoRepository {
         return todoDao.getTodos();
     }
 
+    public LiveData<Integer> getCompletedTodoCount() {
+        return todoDao.getCompletedTodoCount();
+    };
+
+    public LiveData<Integer> getIncompleteTodoCount() {
+        return todoDao.getIncompleteTodoCount();
+    };
+
     public void insert(Todo todo) {
         TodoDatabase.databaseWriteExecutor.execute(() -> {
             todoDao.insert(todo);

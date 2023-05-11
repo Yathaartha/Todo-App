@@ -15,6 +15,12 @@ public interface TodoDao {
     @Query("SELECT * FROM TODO")
     LiveData<List<Todo>> getTodos();
 
+    @Query("SELECT COUNT(*) FROM TODO WHERE isComplete = 1")
+    LiveData<Integer> getCompletedTodoCount();
+
+    @Query("SELECT COUNT(*) FROM TODO WHERE isComplete = 0")
+    LiveData<Integer> getIncompleteTodoCount();
+
     @Insert
     void insert(Todo todo);
 

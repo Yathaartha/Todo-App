@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.todoapp.database.Todo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,6 +36,9 @@ public class TodoListFragment extends Fragment {
     private TodoModel todoModel;
     private View view;
     private FloatingActionButton addTodoButton;
+    private TextView completeCount;
+    private TextView incompleteCount;
+    private TextView totalCount;
 
     public static TodoListFragment newInstance() {
         TodoListFragment fragment = new TodoListFragment();
@@ -54,13 +58,32 @@ public class TodoListFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.todo_list_rv);
         addTodoButton = view.findViewById(R.id.add_todo_btn);
+        completeCount = view.findViewById(R.id.completeTodos);
+        incompleteCount = view.findViewById(R.id.incompleteTodos);
+        totalCount = view.findViewById(R.id.totalTodo);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         adapter = new TodoAdapter();
+
+        todoModel.getCompletedTodoCount().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer count) {
+                completeCount.setText(""+count);
+            }
+        });
+
+        todoModel.getIncompleteTodoCount().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer count) {
+                incompleteCount.setText(""+count);
+            }
+        });
+
         todoModel.getTodosList().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
             @Override
             public void onChanged(List<Todo> todos) {
                 Log.d("onChanged: ", "" + todos);
+                totalCount.setText("Total Tasks: "+todos.size());
                 if(todos.size() == 0) {
                     Todo todo = new Todo();
                     todo.setTitle("No todos yet");
