@@ -8,4 +8,13 @@
         <item>High</item>
         <item>Urgent</item>
     </string-array>
+    <string-array name="category_array">
+        <item>Routine</item>
+        <item>School</item>
+        <item>Work</item>
+        <item>House</item>
+        <item>Family</item>\
+        <item>Friends</item>
+        <item>Other</item>
+    </string-array>
 </resources>

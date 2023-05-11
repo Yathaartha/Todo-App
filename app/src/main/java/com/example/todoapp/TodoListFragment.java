@@ -101,4 +101,10 @@ public class TodoListFragment extends Fragment {
         setHasOptionsMenu(true);
         todoModel = new ViewModelProvider(this).get(TodoModel.class);
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.todo_menu, menu);
+    }
 }

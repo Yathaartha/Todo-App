@@ -1,8 +1,11 @@
 package com.example.todoapp;
 
+import static android.text.format.DateUtils.*;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,7 +83,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             titleTextView.setText(todo.getTitle());
             titleTextView.setTextColor(todo.getIsComplete() ? completeColor : incompleteColor);
             detailTextView.setText(todo.getDetail());
-            dateTextView.setText(todo.getCreatedAt().toString());
+            dateTextView.setText(getRelativeTimeSpanString(todo.getCreatedAt().getTime()));
             if(titleTextView.getText().equals("No todos yet")){
                 editButton.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.GONE);

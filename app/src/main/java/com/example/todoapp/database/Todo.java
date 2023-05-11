@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity(tableName="TODO")
@@ -21,6 +21,12 @@ public class Todo {
     private Date lastUpdated;
     private Date completedAt;
     private String priority;
+    private String category;
+    private Date dueDate;
+
+    public String getCategory() {
+        return category;
+    }
 
     @Override
     public String toString() {
@@ -32,8 +38,22 @@ public class Todo {
                 ", createdAt=" + createdAt +
                 ", lastUpdated=" + lastUpdated +
                 ", completedAt=" + completedAt +
-                ", priority=" + priority +
+                ", priority='" + priority + '\'' +
+                ", category='" + category + '\'' +
+                ", dueDate='" + dueDate + '\'' +
                 '}';
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     public Date getLastUpdated() {
