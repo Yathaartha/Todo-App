@@ -22,9 +22,9 @@ import java.util.Date;
 import java.util.Calendar;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddTodoFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * AddToFragment
+ * This fragment is used to add a new todo to the database.
+ * Implements DatePickerFragment.DatePickerListener to handle the date picker dialog.
  */
 public class AddTodoFragment extends Fragment implements DatePickerFragment.DatePickerListener {
 
@@ -36,13 +36,7 @@ public class AddTodoFragment extends Fragment implements DatePickerFragment.Date
     private Button dueDateInput;
     private DatePickerFragment datePicker;
     private Date dueDate;
-    private Button addButton;
-    private Button cancelButton;
     private Calendar cal;
-
-    private int daySet;
-    private int monthSet;
-    private int yearSet;
 
 
     public AddTodoFragment() {
@@ -67,6 +61,7 @@ public class AddTodoFragment extends Fragment implements DatePickerFragment.Date
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_todo, container, false);
 
         titleEditText = view.findViewById(R.id.titleInput);
@@ -77,19 +72,21 @@ public class AddTodoFragment extends Fragment implements DatePickerFragment.Date
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         prioritySpinner.setAdapter(adapter);
         categorySpinner = view.findViewById(R.id.categorySelect);
+        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),
                 R.array.category_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapter2);
         dueDateInput = view.findViewById(R.id.dueDateInput);
 
-        addButton = view.findViewById(R.id.submit_button);
-        cancelButton = view.findViewById(R.id.cancel_button);
+        Button addButton = view.findViewById(R.id.submit_button);
+        Button cancelButton = view.findViewById(R.id.cancel_button);
 
         prioritySpinner.setOnItemSelectedListener(new SpinnerActivity());
         categorySpinner.setOnItemSelectedListener(new SpinnerActivity());
 
         dueDate = cal.getTime();
+        // Set onClickListener for dueDateInput to show the date picker dialog
         dueDateInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,9 +104,11 @@ public class AddTodoFragment extends Fragment implements DatePickerFragment.Date
             }
         });
 
+        // Set onClickListener for addButton to add the todo to the database
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Get the values from the input fields
                 String title = titleEditText.getText().toString();
                 String detail = detailEditText.getText().toString();
                 String priority = prioritySpinner.getSelectedItem().toString();
@@ -124,6 +123,7 @@ public class AddTodoFragment extends Fragment implements DatePickerFragment.Date
 
                 todoModel.addTodo(todo);
 
+                // Display a toast to indicate that the todo was added
                 Toast.makeText(getContext(), "Todo created", Toast.LENGTH_SHORT).show();
 
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -135,14 +135,15 @@ public class AddTodoFragment extends Fragment implements DatePickerFragment.Date
         return view;
     }
 
+    /**
+     * onDateSelected sets the dueDate to the date selected by the user
+     * @param year The year selected
+     * @param month The month selected
+     * @param day The day selected
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public void onDateSelected(int year, int month, int day) {
-        // Handle the selected date here
-        // You have access to the year, month, and day values
-        daySet = day;
-        monthSet = month;
-        yearSet = year;
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month);
         cal.set(Calendar.DAY_OF_MONTH, day);

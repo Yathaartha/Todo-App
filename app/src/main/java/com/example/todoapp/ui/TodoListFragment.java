@@ -31,18 +31,23 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * TodoListFragment is the fragment that displays the list of todos.
+ */
 public class TodoListFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private TodoAdapter adapter;
     private TodoModel todoModel;
     private View view;
-    private FloatingActionButton addTodoButton;
     private TextView completeCount;
     private TextView incompleteCount;
     private TextView totalCount;
     private List<Todo> emptyList;
 
+    /**
+     * Creates a new instance of TodoListFragment.
+     * @return A new instance of TodoListFragment.
+     */
     public static TodoListFragment newInstance() {
         TodoListFragment fragment = new TodoListFragment();
         Bundle args = new Bundle();
@@ -59,8 +64,8 @@ public class TodoListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_todo_list, container, false);
 
-        recyclerView = view.findViewById(R.id.todo_list_rv);
-        addTodoButton = view.findViewById(R.id.add_todo_btn);
+        RecyclerView recyclerView = view.findViewById(R.id.todo_list_rv);
+        FloatingActionButton addTodoButton = view.findViewById(R.id.add_todo_btn);
         completeCount = view.findViewById(R.id.completeTodos);
         incompleteCount = view.findViewById(R.id.incompleteTodos);
         totalCount = view.findViewById(R.id.totalTodo);
@@ -68,6 +73,7 @@ public class TodoListFragment extends Fragment {
 
         adapter = new TodoAdapter();
 
+        // create a new todo for empty state
         Todo todo = new Todo();
         todo.setTitle("No todos yet");
         todo.setDetail("Press the add icon to create one");
@@ -76,8 +82,9 @@ public class TodoListFragment extends Fragment {
         todo.setCategory("other");
         todo.setDueDate(new Date());
 
-        emptyList = Arrays.asList(todo);
+        emptyList = Arrays.asList(todo);// create a list with the empty todo
 
+        // set completed todo count
         todoModel.getCompletedTodoCount().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer count) {
@@ -85,6 +92,7 @@ public class TodoListFragment extends Fragment {
             }
         });
 
+        // set incomplete todo count
         todoModel.getIncompleteTodoCount().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer count) {
@@ -92,6 +100,7 @@ public class TodoListFragment extends Fragment {
             }
         });
 
+        // set total todo count
         todoModel.getTodosList().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
             @Override
             public void onChanged(List<Todo> todos) {
@@ -108,13 +117,7 @@ public class TodoListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         addTodoButton.setOnClickListener(v -> {
-//            Todo todo = new Todo();
-//            todo.setTitle("New Todo");
-//            todo.setDetail("New Todo Detail");
-//            todo.setIsComplete(true);
-//            todoModel.addTodo(todo);
-//            Intent intent = TodoPagerActivity.makeIntent(getActivity(), todo.getId());
-//            startActivity(intent);
+            // navigate to add todo fragment
             Fragment fragment = new AddTodoFragment();
             FragmentManager fm = getActivity().getSupportFragmentManager();
             fm.beginTransaction()
@@ -138,7 +141,7 @@ public class TodoListFragment extends Fragment {
         inflater.inflate(R.menu.todo_menu, menu);
         MenuItem item = menu.findItem(R.id.sort_todos);
         Spinner spinner = (Spinner) item.getActionView();
-
+        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.sort_todos_array, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -146,6 +149,7 @@ public class TodoListFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selected = parent.getItemAtPosition(pos).toString();
+                // switch case for sorting todos
                 switch (selected) {
                     case "Created At (Latest to Oldest)":
                         todoModel.getTodosList().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {

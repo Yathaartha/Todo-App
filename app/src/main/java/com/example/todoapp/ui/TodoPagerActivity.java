@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * TodoPagerActivity is the activity that displays the ViewPager2.
+ */
 public class TodoPagerActivity extends AppCompatActivity {
 
     public static final String EXTRA_TODO_ID = "todo_id";
@@ -27,6 +30,13 @@ public class TodoPagerActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private TodoModel todoModel;
     private List<Todo> todosList = new ArrayList<>();
+
+    /**
+     * Creates a new instance of TodoPagerActivity.
+     * @param context The context of the activity.
+     * @param todoId The id of the todo to display.
+     * @return A new instance of TodoPagerActivity.
+     */
     public static Intent makeIntent(Context context, UUID todoId) {
         Intent intent = new Intent(context, TodoPagerActivity.class);
         intent.putExtra(EXTRA_TODO_ID, todoId);
@@ -47,15 +57,13 @@ public class TodoPagerActivity extends AppCompatActivity {
             public void onChanged(List<Todo> todos) {
                 todosList = todos;
                 for (int i = 0; i < todosList.size(); i++) {
-                    if (todosList.get(i).getId().equals(todoId)) {
-                        viewPager.setCurrentItem(i);
+                    if (todosList.get(i).getId().equals(todoId)) { // if the todoId matches the current todoId
+                        viewPager.setCurrentItem(i);// set the current item to the todoId
                         break;
                     }
                 }
             }
         });
-
-        Log.d("todosList: ", "" + todosList);
 
         viewPager = findViewById(R.id.view_pager);
 

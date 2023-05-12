@@ -8,6 +8,9 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * Todo Entity that holds all information about a todo item
+ */
 @Entity(tableName="TODO")
 public class Todo {
     @PrimaryKey
@@ -24,10 +27,7 @@ public class Todo {
     private String category;
     private Date dueDate;
 
-    public String getCategory() {
-        return category;
-    }
-
+    @NonNull
     @Override
     public String toString() {
         return "Todo{" +
@@ -42,6 +42,10 @@ public class Todo {
                 ", category='" + category + '\'' +
                 ", dueDate='" + dueDate + '\'' +
                 '}';
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public void setCategory(String category) {
@@ -126,6 +130,4 @@ public class Todo {
     public void setDetail(String detail) {
         this.detail = detail;
     }
-
-
 }

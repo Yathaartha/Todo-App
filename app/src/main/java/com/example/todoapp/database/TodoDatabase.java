@@ -12,9 +12,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.todoapp.util.BooleanTypeConverter;
 import com.example.todoapp.util.DateTypeConverter;
 
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The Room database for this app
+ */
 @Database(entities={Todo.class}, version=1, exportSchema = false)
 @TypeConverters({DateTypeConverter.class, BooleanTypeConverter.class})
 public abstract class TodoDatabase extends RoomDatabase {
@@ -44,13 +48,6 @@ public abstract class TodoDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    /**
-     * Override the onOpen method to populate the database with initial test data.
-     * For this sample, we clear the database every time it is created or opened.
-     *
-     * If you want to populate the database only when the database is created for the 1st time,
-     * override RoomDatabase.Callback()#onCreate
-     */
     private static RoomDatabase.Callback sRoomDatabaseCallback =
             new RoomDatabase.Callback(){
 
@@ -82,24 +79,32 @@ public abstract class TodoDatabase extends RoomDatabase {
                 todo.setTitle("Wake up!");
                 todo.setDetail("either set 2 alarm clocks or none");
                 todo.setPriority("low");
+                todo.setDueDate(new Date());
+                todo.setCategory("home");
                 mDao.insert(todo);
 
                 Todo todo1 = new Todo();
                 todo1.setTitle("Drink coffee!");
                 todo1.setDetail("Use the liter mugs");
                 todo1.setPriority("high");
+                todo1.setDueDate(new Date());
+                todo1.setCategory("work");
                 mDao.insert(todo1);
 
                 Todo todo2 = new Todo();
                 todo2.setTitle("Ponder the duality of existence!");
                 todo2.setDetail("and plant trees");
                 todo2.setPriority("medium");
+                todo2.setDueDate(new Date());
+                todo2.setCategory("home");
                 mDao.insert(todo2);
 
                 Todo todo3 = new Todo();
                 todo3.setTitle("make someone laugh");
                 todo3.setDetail("read a comic");
                 todo3.setPriority("urgent");
+                todo3.setDueDate(new Date());
+                todo3.setCategory("work");
                 mDao.insert(todo3);
             });
         }

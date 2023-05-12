@@ -7,13 +7,16 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Repository for the Todo Entity
+ */
 public class TodoRepository {
-    private TodoDao todoDao;
-    private TodoDatabase database;
+    private final TodoDao todoDao;
     private LiveData<List<Todo>> todos;
 
     public TodoRepository(Application application) {
-        database = TodoDatabase.getDatabase(application);
+        TodoDatabase database = TodoDatabase.getDatabase(application);
+        // get the TodoDao from the database
         todoDao = database.todoDao();
     }
 
@@ -68,8 +71,6 @@ public class TodoRepository {
     }
 
     public void deleteAll() {
-        TodoDatabase.databaseWriteExecutor.execute(() -> {
-            todoDao.deleteAll();
-        });
+        TodoDatabase.databaseWriteExecutor.execute(todoDao::deleteAll);
     }
 }

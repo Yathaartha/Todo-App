@@ -23,9 +23,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link TodoFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * TodoFragment is used to display a single todo.
  */
 public class TodoFragment extends Fragment {
 
@@ -36,12 +34,10 @@ public class TodoFragment extends Fragment {
     private TodoModel todoModel;
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment TodoFragment.
+     * newInstance creates a new instance of TodoFragment with the given todoId.
+     * @param todoId the id of the todo to display
+     * @return a new instance of TodoFragment
      */
-    // TODO: Rename and change types and number of parameters
     public static TodoFragment newInstance(UUID todoId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_TODO_ID, todoId);
@@ -55,6 +51,11 @@ public class TodoFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * onCreate is called when the fragment is first created.
+     * @param savedInstanceState If the fragment is being re-created from
+     * a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,14 +70,13 @@ public class TodoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
         ConstraintLayout layout = view.findViewById(R.id.todoFragmentLayout);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);// instantiate a SimpleDateFormat object with the DATE_PATTERN
 
         TextView titleTextView = view.findViewById(R.id.titleText);
         TextView detailTextView = view.findViewById(R.id.detail);
         TextView categoryTextView = view.findViewById(R.id.category);
         TextView priorityTextView = view.findViewById(R.id.priority);
         TextView dueDateTextView = view.findViewById(R.id.dueDate);
-//        TextView isCompleteTextView = view.findViewById(R.id.isComplete);
         TextView createdAtTextView = view.findViewById(R.id.createdAt);
         TextView lastUpdatedTextView = view.findViewById(R.id.lastUpdated);
         TextView completedAtTextView = view.findViewById(R.id.completedAt);
@@ -84,18 +84,21 @@ public class TodoFragment extends Fragment {
         Button toggleCompletion = view.findViewById(R.id.toggleCompletion);
 
         UUID todoId = (UUID) getArguments().getSerializable(ARG_TODO_ID);
-        Log.d("currentTodo", ""+todoId);
+
+        // observe the todo with the given id
         todoModel.getTodo(todoId).observe(getViewLifecycleOwner(), new Observer<Todo>() {
             @Override
             public void onChanged(Todo todo) {
 
                 currentTodo = todo;
+                // set the text of the TextViews to the values of the todo
                 titleTextView.setText(currentTodo.getTitle());
                 detailTextView.setText(currentTodo.getDetail());
                 categoryTextView.setText(currentTodo.getCategory());
                 priorityTextView.setText(currentTodo.getPriority());
                 dueDateTextView.setText(dateFormat.format(currentTodo.getDueDate()));
                 createdAtTextView.setText(dateFormat.format(currentTodo.getCreatedAt()));
+                // if the lastUpdated or completedAt date is null, set the text to "Never"
                 if(currentTodo.getLastUpdated() != null){
                     lastUpdatedTextView.setText(dateFormat.format(currentTodo.getLastUpdated()));
                 } else {
@@ -107,12 +110,14 @@ public class TodoFragment extends Fragment {
                     completedAtTextView.setText("-");
                 }
 
+                // if the todo is complete, set the text of the button to "Mark Incomplete"
                 if(currentTodo.getIsComplete()){
                     toggleCompletion.setText("Mark Incomplete");
                     layout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primary));
                     toggleCompletion.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            // set the todo to incomplete and update the database
                             currentTodo.setIsComplete(false);
                             currentTodo.setCompletedAt(null);
                             currentTodo.setLastUpdated(new Date());
@@ -125,6 +130,7 @@ public class TodoFragment extends Fragment {
                     toggleCompletion.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            // set the todo to complete and update the database
                             currentTodo.setIsComplete(true);
                             currentTodo.setCompletedAt(new Date());
                             currentTodo.setLastUpdated(new Date());

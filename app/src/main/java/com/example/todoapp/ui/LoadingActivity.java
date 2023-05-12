@@ -8,14 +8,17 @@ import android.os.Handler;
 
 import com.example.todoapp.R;
 
+/**
+ * LoadingActivity
+ * This activity is used to perform initialization or data loading tasks before navigating to the
+ * main activity. Here we simulate a delay of 2 seconds before navigating to the main activity.
+ */
 public class LoadingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
-
-        // Perform initialization or data loading tasks here
 
         // Example: Simulating a delay of 2 seconds
         new Handler().postDelayed(new Runnable() {

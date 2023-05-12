@@ -28,6 +28,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * TodoAdapter is the adapter for the RecyclerView in TodoListFragment.
+ */
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     private List<Todo> data;
@@ -47,12 +50,22 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    /**
+     * Sets the data for the adapter.
+     * @param holder The ViewHolder which should be updated to represent the contents of the
+     *        item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Todo item = data.get(position);
         holder.bind(item);
     }
 
+    /**
+     * Sets the data for the adapter.
+     * @return The number of items in the data set held by the adapter.
+     */
     @Override
     public int getItemCount() {
         if (data != null)
@@ -78,7 +91,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             titleTextView = itemView.findViewById(R.id.title);
             detailTextView = itemView.findViewById(R.id.detail);
             createdDateTextView = itemView.findViewById(R.id.created_at);
@@ -89,6 +101,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         }
 
         public void bind(Todo todo) {
+            // TODO: Bind the data to the ViewHolder
             titleTextView.setText(todo.getTitle());
             titleTextView.setTextColor(todo.getIsComplete() ? completeColor : incompleteColor);
             detailTextView.setText(todo.getDetail());
@@ -98,6 +111,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             long timeDifference = todo.getDueDate().getTime() - new Date().getTime();
             CharSequence relativeTime;
 
+            // get the relative time for dueDate
             if (timeDifference > 0) {
                 String formattedTime = formatElapsedTime(timeDifference / 1000);
                 long relativeDays = timeDifference / (1000 * 60 * 60 * 24);
@@ -106,7 +120,9 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                 relativeTime = "today";
             }
 
-            dueDateTextView.setText("Due " + relativeTime);
+            dueDateTextView.setText("Due " + relativeTime);// set due date text field
+
+            // set priority text field color
             switch (todo.getPriority().toUpperCase()) {
                 case "LOW":
                     priorityTextView.setBackgroundColor(Color.parseColor("#1ECD18"));
@@ -124,6 +140,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                     priorityTextView.setBackgroundColor(Color.parseColor("#1ECD18"));
                     break;
             }
+            // if there are no todos yet, hide the edit and delete buttons and other fields
             if(titleTextView.getText().equals("No todos yet")){
                 createdDateTextView.setVisibility(View.GONE);
                 priorityTextView.setVisibility(View.GONE);
@@ -131,35 +148,34 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
                 deleteButton.setVisibility(View.GONE);
                 dueDateTextView.setVisibility(View.GONE);
             }
+            // open todo detail when pressed on the title
             titleTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getLayoutPosition();
                     UUID id = data.get(position).getId();
-                    Log.d("positionId", ""+position);
-                    Intent intent = TodoPagerActivity.makeIntent(context, id);
+                    Intent intent = TodoPagerActivity.makeIntent(context, id);// create intent to open TodoPagerActivity and pass the id of the todo
                     context.startActivity(intent);
                 }
             });
 
+            // delete the todo when pressed on the delete button
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     int position = getLayoutPosition();
-                    openDialog(view, data.get(position).getId());
-//                    UUID id = data.get(position).getId();
-//
-//                    todoModel.delete(id);
+                    openDialog(view, data.get(position).getId());// open alert dialog box for confirmation
                 }
             });
 
+            // open edit todo fragment when pressed on the edit button
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getLayoutPosition();
                     UUID id = data.get(position).getId();
-                    Fragment fragment = EditTodoFragment.newInstance(id);
+                    Fragment fragment = EditTodoFragment.newInstance(id);// create fragment to open EditTodoFragment and pass the id of the todo
                     FragmentManager fm = ((MainActivity) context).getSupportFragmentManager();
                     fm.beginTransaction()
                             .add(R.id.container, fragment)
@@ -176,7 +192,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         alertDialogBuilder.setMessage("Are you sure you want to delete this todo?");
         alertDialogBuilder.setPositiveButton("Yes",
                 (arg0, arg1) -> {
-                    todoModel.delete(id);
+                    todoModel.delete(id);// delete the todo
                     Toast.makeText(context, "Todo deleted", Toast.LENGTH_SHORT).show();
                 });
 
@@ -186,6 +202,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         alertDialog.show();
     }
 
+    // submitData function to set the data for the adapter
     public void submitData(List<Todo> data) {
         this.data = data;
         notifyDataSetChanged();

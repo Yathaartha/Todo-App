@@ -12,6 +12,9 @@ import com.example.todoapp.database.TodoRepository;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * TodoModel is the ViewModel for the TodoListFragment.
+ */
 public class TodoModel extends AndroidViewModel {
     private TodoRepository repository;
     private LiveData<List<Todo>> todosList;

@@ -1,5 +1,6 @@
 package com.example.todoapp.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,9 +26,8 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditTodoFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * EditTodoFragment is used to edit an existing todo.
+ * Implements DatePickerFragment.DatePickerListener to handle the date picker dialog.
  */
 public class EditTodoFragment extends Fragment implements DatePickerFragment.DatePickerListener {
 
@@ -38,10 +38,9 @@ public class EditTodoFragment extends Fragment implements DatePickerFragment.Dat
     private Spinner prioritySpinner;
     private Spinner categorySpinner;
     private Button dueDateInput;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch isCompleteSwitch;
     private Date dueDate;
-    private Button editButton;
-    private Button cancelButton;
     private Calendar cal;
     private Todo currentTodo;
 
@@ -49,6 +48,11 @@ public class EditTodoFragment extends Fragment implements DatePickerFragment.Dat
         // Required empty public constructor
     }
 
+    /**
+     * newInstance creates a new instance of EditTodoFragment with the given todoId.
+     * @param todoId the id of the todo to edit
+     * @return a new instance of EditTodoFragment
+     */
     public static EditTodoFragment newInstance(UUID todoId) {
         EditTodoFragment fragment = new EditTodoFragment();
         Bundle args = new Bundle();
@@ -61,6 +65,7 @@ public class EditTodoFragment extends Fragment implements DatePickerFragment.Dat
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Get the todoModel from the ViewModelProvider
         todoModel = new ViewModelProvider(this).get(TodoModel.class);
         cal = Calendar.getInstance();
     }
@@ -68,11 +73,13 @@ public class EditTodoFragment extends Fragment implements DatePickerFragment.Dat
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment and get references to the views
         View view = inflater.inflate(R.layout.fragment_edit_todo, container, false);
 
         titleEditText = view.findViewById(R.id.titleInput);
         detailEditText = view.findViewById(R.id.detailInput);
         prioritySpinner = view.findViewById(R.id.prioritySelect);
+        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.priority_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -85,15 +92,16 @@ public class EditTodoFragment extends Fragment implements DatePickerFragment.Dat
         dueDateInput = view.findViewById(R.id.dueDateInput);
         isCompleteSwitch = view.findViewById(R.id.is_complete_switch);
 
-        editButton = view.findViewById(R.id.submit_button);
-        cancelButton = view.findViewById(R.id.cancel_button);
+        Button editButton = view.findViewById(R.id.submit_button);
+        Button cancelButton = view.findViewById(R.id.cancel_button);
 
         UUID todoId = (UUID) getArguments().getSerializable(ARG_TODO_ID);
         Log.d("currentTodo", ""+todoId);
         todoModel.getTodo(todoId).observe(getViewLifecycleOwner(), new Observer<Todo>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(Todo todo) {
-
+                // Update the textFields with the todo's data
                 currentTodo = todo;
                 titleEditText.setText(todo.getTitle());
                 detailEditText.setText(todo.getDetail());
@@ -162,6 +170,8 @@ public class EditTodoFragment extends Fragment implements DatePickerFragment.Dat
         return view;
     }
 
+    // DatePickerListener methods to handle the date picker dialog
+    @SuppressLint("SetTextI18n")
     @Override
     public void onDateSelected(int year, int month, int day) {
         // Handle the selected date here

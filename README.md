@@ -23,6 +23,7 @@ This is a Todo app built using the MVVM (Model-View-ViewModel) architectural pat
 - Loading screen
 - Confirmation dialog before deleting a todo
 - Toasts for CRUD notifications
+- Empty state when there are no todos
 
 ## Screenshots
 
