@@ -65,6 +65,9 @@ The edit todo activity allows users to edit an existing todo. The user can edit 
 
 User can delete todos by clicking the delete action button. A confirm dialog box will appear and choosing yes will delete the todo.
 
+![](empty-state.png)
+When there are no todos added, an empty state is shown asking the user to add todos.
+
 
 ## Getting Started
 
