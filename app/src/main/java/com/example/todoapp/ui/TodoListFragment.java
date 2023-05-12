@@ -28,6 +28,7 @@ import com.example.todoapp.database.Todo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class TodoListFragment extends Fragment {
@@ -40,6 +41,7 @@ public class TodoListFragment extends Fragment {
     private TextView completeCount;
     private TextView incompleteCount;
     private TextView totalCount;
+    private List<Todo> emptyList;
 
     public static TodoListFragment newInstance() {
         TodoListFragment fragment = new TodoListFragment();
@@ -66,6 +68,16 @@ public class TodoListFragment extends Fragment {
 
         adapter = new TodoAdapter();
 
+        Todo todo = new Todo();
+        todo.setTitle("No todos yet");
+        todo.setDetail("Press the add icon to create one");
+        todo.setIsComplete(true);
+        todo.setPriority("urgent");
+        todo.setCategory("other");
+        todo.setDueDate(new Date());
+
+        emptyList = Arrays.asList(todo);
+
         todoModel.getCompletedTodoCount().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer count) {
@@ -86,12 +98,6 @@ public class TodoListFragment extends Fragment {
                 Log.d("onChanged: ", "" + todos);
                 totalCount.setText("Total Tasks: "+todos.size());
                 if(todos.size() == 0) {
-                    Todo todo = new Todo();
-                    todo.setTitle("No todos yet");
-                    todo.setDetail("Press the add icon to create one");
-                    todo.setIsComplete(true);
-                    todo.setPriority("urgent");
-                    List<Todo> emptyList = Arrays.asList(todo);
                     adapter.submitData(emptyList);
                 }else {
                     adapter.submitData(todos);
@@ -140,43 +146,44 @@ public class TodoListFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selected = parent.getItemAtPosition(pos).toString();
-                Log.d("onItemSelected: ", selected);
+                final List<Todo>[] list = new List[]{null};
                 if(selected.equals("Created At (Latest to Oldest)")) {
                     todoModel.getTodosList().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
                         @Override
                         public void onChanged(List<Todo> todos) {
-                            adapter.submitData(todos);
+                            list[0] = todos.size() == 0 ? emptyList : todos;
                         }
                     });
                 }else if(selected.equals("Created At (Oldest to Latest)")) {
                     todoModel.getTodosCreatedAtAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
                         @Override
                         public void onChanged(List<Todo> todos) {
-                            adapter.submitData(todos);
+                            list[0] = todos.size() == 0 ? emptyList : todos;
                         }
                     });
                 }else if(selected.equals("Alphabetical")) {
                     todoModel.getTodosTitleAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
                         @Override
                         public void onChanged(List<Todo> todos) {
-                            adapter.submitData(todos);
+                            list[0] = todos.size() == 0 ? emptyList : todos;
                         }
                     });
                 }else if(selected.equals("Due Date (Closest to Farthest)")) {
                     todoModel.getTodosDueDateAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
                         @Override
                         public void onChanged(List<Todo> todos) {
-                            adapter.submitData(todos);
+                            list[0] = todos.size() == 0 ? emptyList : todos;
                         }
                     });
                 } else if(selected.equals("Due Date (Farthest to Closest)")) {
                     todoModel.getTodosDueDateDesc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
                         @Override
                         public void onChanged(List<Todo> todos) {
-                            adapter.submitData(todos);
+                            list[0] = todos.size() == 0 ? emptyList : todos;
                         }
                     });
                 }
+                adapter.submitData(list[0]);
             }
 
             @Override
