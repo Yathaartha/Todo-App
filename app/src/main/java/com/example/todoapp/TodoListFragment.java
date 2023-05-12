@@ -19,6 +19,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.todoapp.database.Todo;
@@ -129,5 +132,61 @@ public class TodoListFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.todo_menu, menu);
+        MenuItem item = menu.findItem(R.id.sort_todos);
+        Spinner spinner = (Spinner) item.getActionView();
+
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.sort_todos_array, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                String selected = parent.getItemAtPosition(pos).toString();
+                Log.d("onItemSelected: ", selected);
+                if(selected.equals("Created At (Oldest to Latest)")) {
+                    todoModel.getTodosList().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                        @Override
+                        public void onChanged(List<Todo> todos) {
+                            adapter.submitData(todos);
+                        }
+                    });
+                }else if(selected.equals("Created At (Latest to Oldest)")) {
+                    todoModel.getTodosCreatedAtDesc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                        @Override
+                        public void onChanged(List<Todo> todos) {
+                            adapter.submitData(todos);
+                        }
+                    });
+                }else if(selected.equals("Alphabetical")) {
+                    todoModel.getTodosTitleAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                        @Override
+                        public void onChanged(List<Todo> todos) {
+                            adapter.submitData(todos);
+                        }
+                    });
+                }else if(selected.equals("Due Date (Closest to Farthest)")) {
+                    todoModel.getTodosDueDateAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                        @Override
+                        public void onChanged(List<Todo> todos) {
+                            adapter.submitData(todos);
+                        }
+                    });
+                } else if(selected.equals("Due Date (Farthest to Closest)")) {
+                    todoModel.getTodosDueDateDesc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                        @Override
+                        public void onChanged(List<Todo> todos) {
+                            adapter.submitData(todos);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinner.setAdapter(spinnerAdapter);
     }
 }

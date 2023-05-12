@@ -162,10 +162,11 @@ public class EditTodoFragment extends Fragment implements DatePickerFragment.Dat
     public void onDateSelected(int year, int month, int day) {
         // Handle the selected date here
         // You have access to the year, month, and day values
-        cal.set(Calendar.YEAR, 1988);
-        cal.set(Calendar.MONTH, Calendar.JANUARY);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
         dueDateInput.setText(month + "/" + day + "/" + year);
         dueDate = (Date) cal.getTime();
+        Log.d("dueDate",""+dueDate);
     }
 }

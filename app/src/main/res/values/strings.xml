@@ -17,4 +17,11 @@
         <item>Friends</item>
         <item>Other</item>
     </string-array>
+    <string-array name="sort_todos_array">
+        <item>Created At (Oldest to Latest)</item>
+        <item>Created At (Latest to Oldest)</item>
+        <item>Alphabetical</item>
+        <item>Due Date (Closest to Farthest)</item>
+        <item>Due Date (Farthest to Closest)</item>
+    </string-array>
 </resources>

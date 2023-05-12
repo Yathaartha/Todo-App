@@ -2,6 +2,7 @@ package com.example.todoapp;
 
 import static android.text.format.DateUtils.*;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -104,10 +105,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getLayoutPosition();
-                    UUID id = data.get(position).getId();
 
-                    todoModel.delete(id);
+                    int position = getLayoutPosition();
+                    openDialog(view, data.get(position).getId());
+//                    UUID id = data.get(position).getId();
+//
+//                    todoModel.delete(id);
                 }
             });
 
@@ -126,6 +129,22 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
         }
     }
+
+    // function that opens alert dialog box
+    public void openDialog(View view, UUID id) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setMessage("Are you sure you want to delete this todo?");
+        alertDialogBuilder.setPositiveButton("Yes",
+                (arg0, arg1) -> {
+                    todoModel.delete(id);
+                });
+
+        alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     public void submitData(List<Todo> data) {
         this.data = data;
         notifyDataSetChanged();

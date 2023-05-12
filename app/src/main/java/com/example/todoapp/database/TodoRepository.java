@@ -21,6 +21,22 @@ public class TodoRepository {
         return todoDao.getTodos();
     }
 
+    public LiveData<List<Todo>> getTodosCreatedAtDesc() {
+        return todoDao.getTodosCreatedAtDesc();
+    }
+
+    public LiveData<List<Todo>> getTodosTitleAsc() {
+        return todoDao.getTodosTitleAsc();
+    }
+
+    public LiveData<List<Todo>> getTodosDueDateAsc() {
+        return todoDao.getTodosDueDateAsc();
+    }
+
+    public LiveData<List<Todo>> getTodosDueDateDesc() {
+        return todoDao.getTodosDueDateDesc();
+    }
+
     public LiveData<Integer> getCompletedTodoCount() {
         return todoDao.getCompletedTodoCount();
     };

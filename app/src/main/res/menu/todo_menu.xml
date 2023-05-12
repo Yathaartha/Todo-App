@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item
+        android:id="@+id/sort_todos"
+        android:background="#ff00"
+        android:icon="@drawable/sort_icon"
+        android:iconTint="#FFFFFF"
+        android:title="Sort By:"
+        android:titleCondensed="Sort By:"
+        android:tooltipText="Sort By:"
+        android:visible="true"
+        app:actionViewClass="android.widget.Spinner"
+        app:showAsAction="always" />
 </menu>

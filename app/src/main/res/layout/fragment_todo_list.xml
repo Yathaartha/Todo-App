@@ -33,7 +33,8 @@
             app:layout_constraintBottom_toTopOf="@+id/todo_list_rv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/totalTodo">
+            app:layout_constraintTop_toBottomOf="@id/totalTodo"
+            >
 
             <!-- Complete Todos -->
             <LinearLayout
@@ -47,9 +48,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:padding="12dp"
+                    android:padding="5dp"
                     android:text="Complete"
-
+                    android:background="@drawable/custom_border_dark"
                     android:textSize="18sp" />
 
                 <TextView
@@ -58,10 +59,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:padding="12dp"
+                    android:padding="5dp"
                     android:text="0"
                     android:textColor="@color/primary"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:background="@drawable/custom_border_dark"/>
             </LinearLayout>
 
 
@@ -77,9 +79,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:padding="12dp"
+                    android:padding="5dp"
                     android:text="Incomplete"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:background="@drawable/custom_border_dark"/>
 
                 <TextView
                     android:id="@+id/incompleteTodos"
@@ -87,10 +90,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:padding="12dp"
+                    android:padding="5dp"
                     android:text="0"
                     android:textColor="@color/danger"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:background="@drawable/custom_border_dark"
+                    />
             </LinearLayout>
         </LinearLayout>
 

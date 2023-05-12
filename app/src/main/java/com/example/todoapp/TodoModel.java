@@ -27,6 +27,22 @@ public class TodoModel extends AndroidViewModel {
         return todosList;
     }
 
+    LiveData<List<Todo>> getTodosCreatedAtDesc() {
+        return repository.getTodosCreatedAtDesc();
+    }
+
+    LiveData<List<Todo>> getTodosTitleAsc() {
+        return repository.getTodosTitleAsc();
+    }
+
+    LiveData<List<Todo>> getTodosDueDateAsc() {
+        return repository.getTodosDueDateAsc();
+    }
+
+    LiveData<List<Todo>> getTodosDueDateDesc() {
+        return repository.getTodosDueDateDesc();
+    }
+
     LiveData<Integer> getCompletedTodoCount() { return repository.getCompletedTodoCount(); }
 
     LiveData<Integer> getIncompleteTodoCount() { return repository.getIncompleteTodoCount(); }

@@ -12,8 +12,20 @@ import java.util.UUID;
 @Dao
 public interface TodoDao {
 
-    @Query("SELECT * FROM TODO")
+    @Query("SELECT * FROM TODO ORDER BY createdAt ASC")
     LiveData<List<Todo>> getTodos();
+
+    @Query("SELECT * FROM TODO ORDER BY createdAt DESC")
+    LiveData<List<Todo>> getTodosCreatedAtDesc();
+
+    @Query("SELECT * FROM TODO ORDER BY title ASC")
+    LiveData<List<Todo>> getTodosTitleAsc();
+
+    @Query("SELECT * FROM TODO ORDER BY dueDate ASC")
+    LiveData<List<Todo>> getTodosDueDateAsc();
+
+    @Query("SELECT * FROM TODO ORDER BY dueDate DESC")
+    LiveData<List<Todo>> getTodosDueDateDesc();
 
     @Query("SELECT COUNT(*) FROM TODO WHERE isComplete = 1")
     LiveData<Integer> getCompletedTodoCount();
