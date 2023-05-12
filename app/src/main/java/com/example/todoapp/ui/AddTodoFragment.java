@@ -143,9 +143,9 @@ public class AddTodoFragment extends Fragment implements DatePickerFragment.Date
         daySet = day;
         monthSet = month;
         yearSet = year;
-        cal.set(Calendar.YEAR, 1988);
-        cal.set(Calendar.MONTH, Calendar.JANUARY);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
         dueDateInput.setText("Due Date: " +month + "/" + day + "/" + year);
         dueDate = (Date) cal.getTime();
     }
