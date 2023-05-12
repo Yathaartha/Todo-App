@@ -1,4 +1,4 @@
-package com.example.todoapp;
+package com.example.todoapp.ui;
 
 import static android.text.format.DateUtils.*;
 
@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todoapp.R;
 import com.example.todoapp.database.Todo;
 
 import java.util.Date;

@@ -1,6 +1,5 @@
-package com.example.todoapp;
+package com.example.todoapp.ui;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,9 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.todoapp.R;
 import com.example.todoapp.database.Todo;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -9,6 +9,9 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.todoapp.util.BooleanTypeConverter;
+import com.example.todoapp.util.DateTypeConverter;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

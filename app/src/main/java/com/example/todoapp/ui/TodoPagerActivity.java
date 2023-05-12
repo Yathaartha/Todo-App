@@ -1,4 +1,4 @@
-package com.example.todoapp;
+package com.example.todoapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.todoapp.R;
 import com.example.todoapp.database.Todo;
 
 import java.util.ArrayList;

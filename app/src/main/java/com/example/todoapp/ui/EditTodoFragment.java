@@ -1,4 +1,4 @@
-package com.example.todoapp;
+package com.example.todoapp.ui;
 
 import android.os.Bundle;
 
@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.todoapp.R;
 import com.example.todoapp.database.Todo;
 import com.google.android.material.textfield.TextInputEditText;
 

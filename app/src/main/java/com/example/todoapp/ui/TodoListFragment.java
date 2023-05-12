@@ -1,6 +1,5 @@
-package com.example.todoapp;
+package com.example.todoapp.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,13 +23,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.todoapp.R;
 import com.example.todoapp.database.Todo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 public class TodoListFragment extends Fragment {
 
