@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -176,6 +177,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         alertDialogBuilder.setPositiveButton("Yes",
                 (arg0, arg1) -> {
                     todoModel.delete(id);
+                    Toast.makeText(context, "Todo deleted", Toast.LENGTH_SHORT).show();
                 });
 
         alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());

@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.todoapp.database.Todo;
 import com.google.android.material.textfield.TextInputEditText;
@@ -148,6 +149,8 @@ public class EditTodoFragment extends Fragment implements DatePickerFragment.Dat
                 }
 
                 todoModel.updateTodo(currentTodo);
+
+                Toast.makeText(getContext(), "Todo updated", Toast.LENGTH_SHORT).show();
 
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, TodoListFragment.newInstance())

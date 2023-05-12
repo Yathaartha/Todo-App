@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.todoapp.database.Todo;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -128,6 +129,8 @@ public class AddTodoFragment extends Fragment implements DatePickerFragment.Date
                 todo.setDueDate(dueDate);
 
                 todoModel.addTodo(todo);
+
+                Toast.makeText(getContext(), "Todo created", Toast.LENGTH_SHORT).show();
 
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, TodoListFragment.newInstance())
