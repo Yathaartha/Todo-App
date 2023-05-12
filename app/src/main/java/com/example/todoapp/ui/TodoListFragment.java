@@ -146,44 +146,49 @@ public class TodoListFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selected = parent.getItemAtPosition(pos).toString();
-                final List<Todo>[] list = new List[]{null};
-                if(selected.equals("Created At (Latest to Oldest)")) {
-                    todoModel.getTodosList().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
-                        @Override
-                        public void onChanged(List<Todo> todos) {
-                            list[0] = todos.size() == 0 ? emptyList : todos;
-                        }
-                    });
-                }else if(selected.equals("Created At (Oldest to Latest)")) {
-                    todoModel.getTodosCreatedAtAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
-                        @Override
-                        public void onChanged(List<Todo> todos) {
-                            list[0] = todos.size() == 0 ? emptyList : todos;
-                        }
-                    });
-                }else if(selected.equals("Alphabetical")) {
-                    todoModel.getTodosTitleAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
-                        @Override
-                        public void onChanged(List<Todo> todos) {
-                            list[0] = todos.size() == 0 ? emptyList : todos;
-                        }
-                    });
-                }else if(selected.equals("Due Date (Closest to Farthest)")) {
-                    todoModel.getTodosDueDateAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
-                        @Override
-                        public void onChanged(List<Todo> todos) {
-                            list[0] = todos.size() == 0 ? emptyList : todos;
-                        }
-                    });
-                } else if(selected.equals("Due Date (Farthest to Closest)")) {
-                    todoModel.getTodosDueDateDesc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
-                        @Override
-                        public void onChanged(List<Todo> todos) {
-                            list[0] = todos.size() == 0 ? emptyList : todos;
-                        }
-                    });
+                switch (selected) {
+                    case "Created At (Latest to Oldest)":
+                        todoModel.getTodosList().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                            @Override
+                            public void onChanged(List<Todo> todos) {
+                                adapter.submitData(todos.size() == 0 ? emptyList : todos);
+                            }
+                        });
+                        break;
+                    case "Created At (Oldest to Latest)":
+                        todoModel.getTodosCreatedAtAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                            @Override
+                            public void onChanged(List<Todo> todos) {
+                                adapter.submitData(todos.size() == 0 ? emptyList : todos);
+                            }
+                        });
+                        break;
+                    case "Alphabetical":
+                        todoModel.getTodosTitleAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                            @Override
+                            public void onChanged(List<Todo> todos) {
+                                adapter.submitData(todos.size() == 0 ? emptyList : todos);
+                            }
+                        });
+                        break;
+                    case "Due Date (Closest to Farthest)":
+                        todoModel.getTodosDueDateAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                            @Override
+                            public void onChanged(List<Todo> todos) {
+                                adapter.submitData(todos.size() == 0 ? emptyList : todos);
+                            }
+                        });
+                        break;
+                    case "Due Date (Farthest to Closest)":
+                        todoModel.getTodosDueDateDesc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                            @Override
+                            public void onChanged(List<Todo> todos) {
+                                adapter.submitData(todos.size() == 0 ? emptyList : todos);
+                            }
+                        });
+                        break;
                 }
-                adapter.submitData(list[0]);
+
             }
 
             @Override
