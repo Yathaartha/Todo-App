@@ -27,8 +27,8 @@ public class TodoModel extends AndroidViewModel {
         return todosList;
     }
 
-    LiveData<List<Todo>> getTodosCreatedAtDesc() {
-        return repository.getTodosCreatedAtDesc();
+    LiveData<List<Todo>> getTodosCreatedAtAsc() {
+        return repository.getTodosCreatedAtAsc();
     }
 
     LiveData<List<Todo>> getTodosTitleAsc() {

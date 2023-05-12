@@ -8,12 +8,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#E8E7E7">
 
         <TextView
             android:id="@+id/totalTodo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="#FFFFFF"
             android:elevation="15dp"
             android:padding="10dp"
             android:text="Total Todos: 0"
@@ -29,12 +31,13 @@
             android:id="@+id/todos_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="#FFFFFF"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/todo_list_rv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/totalTodo"
-            >
+            app:layout_constraintTop_toBottomOf="@id/totalTodo">
 
             <!-- Complete Todos -->
             <LinearLayout
@@ -47,10 +50,10 @@
                     android:layout_width="196dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/custom_border_dark"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="Complete"
-                    android:background="@drawable/custom_border_dark"
                     android:textSize="18sp" />
 
                 <TextView
@@ -58,12 +61,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/custom_border_dark"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="0"
                     android:textColor="@color/primary"
-                    android:textSize="18sp"
-                    android:background="@drawable/custom_border_dark"/>
+                    android:textSize="18sp" />
             </LinearLayout>
 
 
@@ -78,24 +81,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/custom_border_dark"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="Incomplete"
-                    android:textSize="18sp"
-                    android:background="@drawable/custom_border_dark"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/incompleteTodos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/custom_border_dark"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="0"
                     android:textColor="@color/danger"
-                    android:textSize="18sp"
-                    android:background="@drawable/custom_border_dark"
-                    />
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -114,10 +116,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:clickable="true"
+            android:contentDescription="add todo"
             android:src="@drawable/add_icon"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="add todo" />
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

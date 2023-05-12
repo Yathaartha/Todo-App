@@ -21,8 +21,8 @@ public class TodoRepository {
         return todoDao.getTodos();
     }
 
-    public LiveData<List<Todo>> getTodosCreatedAtDesc() {
-        return todoDao.getTodosCreatedAtDesc();
+    public LiveData<List<Todo>> getTodosCreatedAtAsc() {
+        return todoDao.getTodosCreatedAtAsc();
     }
 
     public LiveData<List<Todo>> getTodosTitleAsc() {

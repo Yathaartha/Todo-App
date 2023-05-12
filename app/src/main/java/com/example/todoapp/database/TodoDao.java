@@ -12,11 +12,11 @@ import java.util.UUID;
 @Dao
 public interface TodoDao {
 
-    @Query("SELECT * FROM TODO ORDER BY createdAt ASC")
+    @Query("SELECT * FROM TODO ORDER BY createdAt DESC")
     LiveData<List<Todo>> getTodos();
 
-    @Query("SELECT * FROM TODO ORDER BY createdAt DESC")
-    LiveData<List<Todo>> getTodosCreatedAtDesc();
+    @Query("SELECT * FROM TODO ORDER BY createdAt ASC")
+    LiveData<List<Todo>> getTodosCreatedAtAsc();
 
     @Query("SELECT * FROM TODO ORDER BY title ASC")
     LiveData<List<Todo>> getTodosTitleAsc();

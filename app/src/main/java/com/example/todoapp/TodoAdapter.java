@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todoapp.database.Todo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,7 +63,9 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
         private TextView titleTextView;
         private TextView detailTextView;
-        private TextView dateTextView;
+        private TextView createdDateTextView;
+        private TextView priorityTextView;
+        private TextView dueDateTextView;
         private ImageButton deleteButton;
         private ImageButton editButton;
 
@@ -77,7 +80,9 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
             titleTextView = itemView.findViewById(R.id.title);
             detailTextView = itemView.findViewById(R.id.detail);
-            dateTextView = itemView.findViewById(R.id.created_at);
+            createdDateTextView = itemView.findViewById(R.id.created_at);
+            priorityTextView = itemView.findViewById(R.id.priorityTextView);
+            dueDateTextView = itemView.findViewById(R.id.dueDateText);
             editButton = itemView.findViewById(R.id.editButton);
             deleteButton = itemView.findViewById(R.id.deleteButton);
         }
@@ -86,10 +91,44 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
             titleTextView.setText(todo.getTitle());
             titleTextView.setTextColor(todo.getIsComplete() ? completeColor : incompleteColor);
             detailTextView.setText(todo.getDetail());
-            dateTextView.setText(getRelativeTimeSpanString(todo.getCreatedAt().getTime()));
+            createdDateTextView.setText(getRelativeTimeSpanString(todo.getCreatedAt().getTime()));
+            priorityTextView.setText(todo.getPriority().toUpperCase());
+
+            long timeDifference = todo.getDueDate().getTime() - new Date().getTime();
+            CharSequence relativeTime;
+
+            if (timeDifference > 0) {
+                String formattedTime = formatElapsedTime(timeDifference / 1000);
+                long relativeDays = timeDifference / (1000 * 60 * 60 * 24);
+                relativeTime = "in " + relativeDays + " days";
+            } else {
+                relativeTime = "today";
+            }
+
+            dueDateTextView.setText("Due " + relativeTime);
+            switch (todo.getPriority().toUpperCase()) {
+                case "LOW":
+                    priorityTextView.setBackgroundColor(Color.parseColor("#1ECD18"));
+                    break;
+                case "MEDIUM":
+                    priorityTextView.setBackgroundColor(Color.parseColor("#FFA500"));
+                    break;
+                case "HIGH":
+                    priorityTextView.setBackgroundColor(Color.parseColor("#FF0000"));
+                    break;
+                case "URGENT":
+                    priorityTextView.setBackgroundColor(Color.parseColor("#8B0000"));
+                    break;
+                default:
+                    priorityTextView.setBackgroundColor(Color.parseColor("#1ECD18"));
+                    break;
+            }
             if(titleTextView.getText().equals("No todos yet")){
+                createdDateTextView.setVisibility(View.GONE);
+                priorityTextView.setVisibility(View.GONE);
                 editButton.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.GONE);
+                dueDateTextView.setVisibility(View.GONE);
             }
             titleTextView.setOnClickListener(new View.OnClickListener() {
                 @Override

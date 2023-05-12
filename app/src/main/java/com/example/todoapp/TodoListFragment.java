@@ -143,15 +143,15 @@ public class TodoListFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selected = parent.getItemAtPosition(pos).toString();
                 Log.d("onItemSelected: ", selected);
-                if(selected.equals("Created At (Oldest to Latest)")) {
+                if(selected.equals("Created At (Latest to Oldest)")) {
                     todoModel.getTodosList().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
                         @Override
                         public void onChanged(List<Todo> todos) {
                             adapter.submitData(todos);
                         }
                     });
-                }else if(selected.equals("Created At (Latest to Oldest)")) {
-                    todoModel.getTodosCreatedAtDesc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
+                }else if(selected.equals("Created At (Oldest to Latest)")) {
+                    todoModel.getTodosCreatedAtAsc().observe(getViewLifecycleOwner(), new Observer<List<Todo>>() {
                         @Override
                         public void onChanged(List<Todo> todos) {
                             adapter.submitData(todos);
